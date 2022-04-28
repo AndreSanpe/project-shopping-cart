@@ -24,6 +24,18 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+const getElements = async () => {
+  const object = await fetchProducts('computador');
+  const { results } = object;
+  results.forEach((item) => {
+    const { id: sku, title: name, thumbnail: image } = item;
+  const father = document.getElementsByClassName('items')[0];
+  const section = createProductItemElement({ sku, name, image });
+  father.appendChild(section);
+  });
+};
+getElements();
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
