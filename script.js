@@ -12,29 +12,51 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const valorTotal = () => {
+const AddLoading = () => {
+  const sectionItems = document.querySelector('.items');
+  const loadingElement = document.createElement('div');
+  loadingElement.className = 'loading';
+  loadingElement.innerText = 'Loading...';
+  sectionItems.appendChild(loadingElement);
+};
+
+const removeLoading = () => document.querySelector('.loading').remove();
+
+const totalValue = () => {
   const lis = document.getElementsByClassName('cart__item');
-  const array = Array.from(lis);
-  const soma = array.reduce((accValor, item) => accValor + Number(item
-    .innerText.split('PRICE: $')[1]), 0);
+  const array = Array.from(lis); // This is made to turn something into a array.
+  const soma = array.reduce((accValor, item) => accValor + Number(item // I needed to split the string to just take the number part of it.
+    .innerText.split('PRICE: $')[1]), 0); // This reduce was made to do the oparation of all objetc on the ol cart. 
   const span = document.querySelector('.total-price');
   span.innerText = soma;
 };
-
+// The next function just take the ID of the element that I want,  when I pass to it the relative element as a parameter of the function.
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
+
+const emptyCart = () => {
+  const ol = document.querySelector('.cart__items');
+  const emptyBtn = document.querySelector('.empty-cart');
+  emptyBtn.addEventListener('click', () => {
+    ol.innerHTML = '';
+    saveCartItems(); // I called this function to save all itens from the cart to the localStorage.
+  });
+};
+
+// This next function I made to remove element from the shooping cart. Then I used other two functions that need to be called when this action happens.
 function cartItemClickListener(event) {
   event.target.remove();
-  valorTotal();
+  totalValue();
   saveCartItems();
+  emptyCart();
 }
 
 const elementSaved = () => {
   const lis = document.getElementsByClassName('cart__item');
   console.log(lis);
-  const array = Array.from(lis); // to use forEach!
-  console.log(array);
+  const array = Array.from(lis); // to use forEach I transform the HTML colections into a array.
+  // console.log(array);
   array.forEach((item) => item.addEventListener('click', cartItemClickListener));
 };
 
@@ -54,8 +76,9 @@ const target = async (event) => {
   const productCart = createCartItemElement({ sku, name, salePrice });
   const father = document.querySelector('.cart__items');
   father.appendChild(productCart);
-  valorTotal();
+  totalValue();
   saveCartItems();
+  emptyCart();
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -66,7 +89,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-    .addEventListener('click', target);
+    .addEventListener('click', target); // This was made to add an event listener when the button was make. 
 
   return section;
 }
@@ -86,5 +109,6 @@ getElements();
 window.onload = () => {
   getSavedCartItems();
   elementSaved();
-  valorTotal();
+  totalValue();
+  emptyCart();
 };
