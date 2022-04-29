@@ -113,8 +113,14 @@ const getElements = async () => {
 };
 getElements();
 
+const getCartElements = () => {
+  const getSaved = getSavedCartItems();
+  const ol = document.querySelector('.cart__items');
+  ol.innerHTML = getSaved;
+};
+
 window.onload = async () => {
-  getSavedCartItems();
+  getCartElements();
   elementSaved();
   totalValue();
   emptyCart();
