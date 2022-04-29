@@ -12,7 +12,8 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const AddLoading = () => {
+// The next function I make to creat the loading element;
+const addLoading = () => {
   const sectionItems = document.querySelector('.items');
   const loadingElement = document.createElement('div');
   loadingElement.className = 'loading';
@@ -20,7 +21,12 @@ const AddLoading = () => {
   sectionItems.appendChild(loadingElement);
 };
 
-const removeLoading = () => document.querySelector('.loading').remove();
+// The next function I make to remove the loading element;
+const removeLoading = () => {
+  const items = document.querySelectorAll('.items');
+  const loadingElement = document.querySelector('.loading');
+  if (items !== 0) loadingElement.remove();
+};
 
 const totalValue = () => {
   const lis = document.getElementsByClassName('cart__item');
@@ -54,7 +60,6 @@ function cartItemClickListener(event) {
 
 const elementSaved = () => {
   const lis = document.getElementsByClassName('cart__item');
-  console.log(lis);
   const array = Array.from(lis); // to use forEach I transform the HTML colections into a array.
   // console.log(array);
   array.forEach((item) => item.addEventListener('click', cartItemClickListener));
@@ -90,11 +95,11 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
     .addEventListener('click', target); // This was made to add an event listener when the button was make. 
-
   return section;
 }
 // this function was used to require the response from the server and append it to the page. 
 const getElements = async () => {
+  addLoading();
   const object = await fetchProducts('computador');
   const { results } = object;
   results.forEach((item) => {
@@ -111,4 +116,5 @@ window.onload = () => {
   elementSaved();
   totalValue();
   emptyCart();
+  removeLoading();
 };
