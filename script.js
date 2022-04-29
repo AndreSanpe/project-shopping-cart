@@ -109,6 +109,7 @@ const getElements = async () => {
     const father = document.getElementsByClassName('items')[0];
     const section = createProductItemElement({ sku, name, image }); // I used the this function to create the element with those parameters.
     father.appendChild(section);
+    removeLoading();
   });
 };
 getElements();
@@ -123,5 +124,4 @@ window.onload = async () => {
   elementSaved();
   totalValue();
   emptyCart();
-  await removeLoading();
 };
