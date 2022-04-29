@@ -1,3 +1,5 @@
+const ol = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -44,11 +46,10 @@ function getSkuFromProductItem(item) {
 }
 
 const emptyCart = () => {
-  const ol = document.querySelector('.cart__items');
   const emptyBtn = document.querySelector('.empty-cart');
   emptyBtn.addEventListener('click', () => {
     ol.innerHTML = '';
-    saveCartItems(); // I called this function to save all itens from the cart to the localStorage.
+    saveCartItems(ol.innerHTML); // I called this function to save all itens from the cart to the localStorage.
   });
 };
 
@@ -56,7 +57,7 @@ const emptyCart = () => {
 function cartItemClickListener(event) {
   event.target.remove();
   totalValue();
-  saveCartItems();
+  saveCartItems(ol.innerHTML);
   emptyCart();
 }
 
@@ -81,10 +82,9 @@ const target = async (event) => {
   const item = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = item;
   const productCart = createCartItemElement({ sku, name, salePrice });
-  const father = document.querySelector('.cart__items');
-  father.appendChild(productCart);
+  ol.appendChild(productCart);
   totalValue();
-  saveCartItems();
+  saveCartItems(ol.innerHTML);
   emptyCart();
 };
 
@@ -115,7 +115,6 @@ getElements();
 
 const getCartElements = () => {
   const getSaved = getSavedCartItems();
-  const ol = document.querySelector('.cart__items');
   ol.innerHTML = getSaved;
 };
 

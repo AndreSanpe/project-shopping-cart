@@ -1,5 +1,4 @@
-const saveCartItems = () => {
-  const ol = document.querySelector('.cart__items').innerHTML;
+const saveCartItems = (ol) => {
   localStorage.setItem('cartItems', ol);
 };
 
