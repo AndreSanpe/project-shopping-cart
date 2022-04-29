@@ -22,12 +22,13 @@ const addLoading = () => {
 };
 
 // The next function I make to remove the loading element;
-const removeLoading = () => {
+const removeLoading = async () => {
   const items = document.querySelectorAll('.items');
-  const loadingElement = document.querySelector('.loading');
+  const loadingElement = await document.querySelector('.loading');
   if (items !== 0) loadingElement.remove();
 };
 
+// The next arrow function I make to sum all items that are in the shooping cart.
 const totalValue = () => {
   const lis = document.getElementsByClassName('cart__item');
   const array = Array.from(lis); // This is made to turn something into a array.
@@ -36,6 +37,7 @@ const totalValue = () => {
   const span = document.querySelector('.total-price');
   span.innerText = soma;
 };
+
 // The next function just take the ID of the element that I want,  when I pass to it the relative element as a parameter of the function.
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
@@ -111,10 +113,10 @@ const getElements = async () => {
 };
 getElements();
 
-window.onload = () => {
+window.onload = async () => {
   getSavedCartItems();
   elementSaved();
   totalValue();
   emptyCart();
-  removeLoading();
+  await removeLoading();
 };
