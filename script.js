@@ -27,7 +27,7 @@ const addLoading = () => {
   const sectionItems = document.querySelector('.items');
   const loadingElement = document.createElement('div');
   loadingElement.className = 'loading';
-  loadingElement.innerText = 'Loading...';
+  // loadingElement.innerText = 'Loading...';
   sectionItems.appendChild(loadingElement);
 };
 
@@ -119,7 +119,7 @@ function createProductItemElement({ sku, name, image, salePrice }) {
   const value = createCustomElement('span', 'item__value', salePrice);
   // const valueBrl = value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   const valueBrl = Number((value.innerText))
-      .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   value.innerText = valueBrl;
   section.appendChild(value);
   // const test = document.querySelector('.item__value').innerText;
@@ -128,11 +128,41 @@ function createProductItemElement({ sku, name, image, salePrice }) {
     .addEventListener('click', target); // This was made to add an event listener when the button was make. 
   return section;
 }
+let inputValue;
+const inputGet = ({ key }) => {
+  if (key === 'Enter') {
+    inputValue = document.getElementById('input').value;
+    document.getElementsByClassName('items')[0].innerHTML = '';
+    const getElements = async () => {
+      addLoading();
+      // const object = await fetchProducts('computador');
+      const object = await fetchProducts(inputValue);
+      console.log(inputValue);
+      const { results } = object;
+      results.forEach((item) => {
+        const { id: sku, title: name, thumbnail: image, price: salePrice } = item;
+        const father = document.getElementsByClassName('items')[0];
+        const section = createProductItemElement({ sku, name, image, salePrice }); // I used the this function to create the element with those parameters.
+        father.appendChild(section);
+        removeLoading();
+      });
+    };
+    getElements();
+    document.getElementById('input').value = '';
+  }
+};
+
+const input = () => {
+  document.getElementById('input').addEventListener('keypress', inputGet);
+};
+
+input();
 
 // this function was used to require the response from the server and append it to the page. 
 const getElements = async () => {
   addLoading();
-  const object = await fetchProducts('computador');
+  // const object = await fetchProducts('computador');
+  const object = await fetchProducts(inputValue);
   const { results } = object;
   results.forEach((item) => {
     const { id: sku, title: name, thumbnail: image, price: salePrice } = item;
@@ -154,4 +184,5 @@ window.onload = async () => {
   elementSaved();
   totalValue();
   emptyCart();
+  input();
 };
