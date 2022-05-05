@@ -252,7 +252,13 @@ color:antiquewhite;
 #festa{
   width: 60%;
   height:60%;
+  /* animation: spin 4s linear infinite; */
+  animation: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
+/* @keyframes example {
+  from {opacity: 100%;}
+  to {opacity: 10%;}
+} */
 
 #finalizado{
   display: flex;
