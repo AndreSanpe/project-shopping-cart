@@ -47,6 +47,7 @@ const totalValue = () => {
   const span = document.querySelector('.total-price');
 
   span.innerText = `${soma.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
+  return span.innerText;
 };
 
 // The next function just take the ID of the element that I want,  when I pass to it the relative element as a parameter of the function.
@@ -152,6 +153,26 @@ const inputGet = ({ key }) => {
   }
 };
 
+const inputText = () => {
+    document.getElementsByClassName('items')[0].innerHTML = '';
+    const getElements = async () => {
+      addLoading();
+      // const object = await fetchProducts('computador');
+      const object = await fetchProducts(inputValue);
+      console.log(inputValue);
+      const { results } = object;
+      results.forEach((item) => {
+        const { id: sku, title: name, thumbnail: image, price: salePrice } = item;
+        const father = document.getElementsByClassName('items')[0];
+        const section = createProductItemElement({ sku, name, image, salePrice }); // I used the this function to create the element with those parameters.
+        father.appendChild(section);
+        removeLoading();
+      });
+      document.getElementById('input').value = '';
+    };
+    getElements();
+};
+
 const input = () => {
   document.getElementById('input').addEventListener('keypress', inputGet);
 };
@@ -178,6 +199,44 @@ const getCartElements = () => {
   const getSaved = getSavedCartItems();
   ol.innerHTML = getSaved;
 };
+
+document.getElementById('car').addEventListener('click', () => {
+  inputValue = 'carro';
+  inputText();
+});
+
+document.getElementById('liv').addEventListener('click', () => {
+  inputValue = 'livros';
+  inputText();
+});
+
+document.getElementById('coz').addEventListener('click', () => {
+  inputValue = 'cozinha';
+  inputText();
+});
+
+document.getElementById('ele').addEventListener('click', () => {
+  inputValue = 'eletrônicos';
+  inputText();
+});
+
+document.getElementById('fim').addEventListener('click', () => {
+  document.getElementsByClassName('items')[0]
+      .innerHTML = `<div id="finalizado">
+                      <div>
+                        <h1 style="color:green; font-size:30px"> 
+                            O valor Total da compra é de  ${totalValue()} reais.
+                        </h1>
+                      </div>
+                      <div>
+                        <h1 style="font-size:25px"> 
+                          Muito obrigado pela sua compra!
+                        </h1>
+                      </div>  
+                      <img id="festa" src="./image-festa.png"> </img>
+                    </div>`;
+                    
+});
 
 window.onload = async () => {
   getCartElements();
