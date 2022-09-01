@@ -234,8 +234,7 @@ document.getElementById('fim').addEventListener('click', () => {
                         </h1>
                       </div>  
                       <img id="festa" src="./image-festa.png"> </img>
-                    </div>`;
-                    
+                    </div>`;                 
 });
 
 window.onload = async () => {

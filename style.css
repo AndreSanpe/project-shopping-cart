@@ -218,9 +218,9 @@ p {
 /* https://www.w3schools.com/howto/howto_css_loader.asp */
 
 .loading {
-  border: 16px solid #f3f3f3; 
-  border-top: 16px solid #a9a9a9; 
-  border-radius: 50%;
+  border: 16px solid #fffdfd; 
+  border-top: 16px solid #747373; 
+  border-radius: 90%;
   width: 120px;
   height: 120px;
   animation: spin 2s linear infinite;
@@ -253,12 +253,8 @@ color:antiquewhite;
   width: 60%;
   height:60%;
   /* animation: spin 4s linear infinite; */
-  animation: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  animation: sizing 10s relative infinite;
 }
-/* @keyframes example {
-  from {opacity: 100%;}
-  to {opacity: 10%;}
-} */
 
 #finalizado{
   display: flex;
