@@ -11,7 +11,7 @@ Nesse projeto, abordado:
 
 # Aplicação disponível em: 
 
-[Shopping Cart](https://andresanpe.github.io/project-shopping-cart/)
+# [Shopping Cart](https://andresanpe.github.io/project-shopping-cart/)
 
 ## O que foi desenvolvido
 
